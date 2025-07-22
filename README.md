@@ -1,11 +1,11 @@
-# Katalog Jualan – NandangGaming
+# DAFTAR-HARGA
 
 Katalog produk online menggunakan Google Sheet sebagai database dan GitHub Pages sebagai hosting.
 
 ## Deploy Cepat
 1. Clone repo:
    ```bash
-   git clone https://github.com/NandangGaming/katalog-jualan.git
+   git clone https://github.com/NandangGaming/DAFTAR-HARGA.git
    git add .
 Tambahkan atau edit file index.html sesuai kebutuhan.
 
