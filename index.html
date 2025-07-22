@@ -10,13 +10,11 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
-  <style>
-    body { font-family: 'Inter', sans-serif; }
-  </style>
   <link rel="stylesheet" href="cart.css">
-<script src="app.js" defer></script>
+  <style>body { font-family: 'Inter', sans-serif; }</style>
+  <script src="app.js" defer></script>
 </head>
-<body class="bg-gray-50 text-gray-800">
+<body>
   <header class="bg-white shadow sticky top-0 z-10">
     <div class="max-w-5xl mx-auto p-4 flex flex-col sm:flex-row sm:items-center gap-3">
       <h1 class="text-xl font-bold flex-1">Katalog Produk</h1>
@@ -33,53 +31,49 @@
       </select>
     </div>
   </header>
-<!-- Tombol Keranjang Floating -->
-<div id="cart-icon">
-  🛒 <span id="cart-count">0</span>
-</div>
 
-<!-- Modal Keranjang -->
-<div id="cart-modal" class="hidden">
-  <div class="cart-content">
-    <h2>Keranjang Belanja</h2>
-    <div id="cart-items"></div>
-    <div class="cart-total">
-      Total: <span id="cart-total">Rp 0</span>
+  <!-- Tombol Keranjang -->
+  <div id="cart-icon">🛒 <span id="cart-count">0</span></div>
+
+  <!-- Modal Keranjang -->
+  <div id="cart-modal" class="hidden">
+    <div class="cart-content">
+      <h2>Keranjang Belanja</h2>
+      <div id="cart-items"></div>
+      <div class="cart-total">
+        Total: <span id="cart-total">Rp 0</span>
+      </div>
+      <button id="checkout-btn">Bayar</button>
+      <button id="close-cart">Tutup</button>
     </div>
-    <button id="checkout-btn">Bayar</button>
-    <button id="close-cart">Tutup</button>
   </div>
-</div>
 
-<!-- Modal Pembayaran -->
-<div id="payment-modal" class="hidden">
-  <div class="payment-content">
-    <h2>Pembayaran</h2>
-    <div class="payment-tabs">
-      <button class="tab-btn active" data-tab="qris">QRIS</button>
-      <button class="tab-btn" data-tab="bca">Transfer BCA</button>
+  <!-- Modal Pembayaran -->
+  <div id="payment-modal" class="hidden">
+    <div class="payment-content">
+      <h2>Pembayaran</h2>
+      <div class="payment-tabs">
+        <button class="tab-btn active" data-tab="qris">QRIS</button>
+        <button class="tab-btn" data-tab="bca">Transfer BCA</button>
+      </div>
+
+      <div class="tab-panel" id="tab-qris">
+        <p>Scan QRIS berikut:</p>
+        <img src="https://drive.google.com/uc?id=1TuzdX2YaUk8hZ8dqBcLnOxYWk-5Qr0Ee" alt="QRIS" class="qris-img">
+        <p>Total bayar: <span id="qris-total">Rp 0</span></p>
+      </div>
+
+      <div class="tab-panel hidden" id="tab-bca">
+        <p>Transfer ke rekening berikut:</p>
+        <p><strong>BCA 8025147932</strong><br>a.n <strong>Nandang Tri Prasojo</strong></p>
+        <p>Total bayar: <span id="bca-total">Rp 0</span></p>
+      </div>
+
+      <button id="confirm-wa">Konfirmasi WA</button>
+      <button id="close-payment">Tutup</button>
     </div>
-
-    <!-- Tab QRIS -->
-    <div class="tab-panel" id="tab-qris">
-      <p>Scan QRIS berikut:</p>
-      <img src="https://drive.google.com/uc?id=1TuzdX2YaUk8hZ8dqBcLnOxYWk-5Qr0Ee" 
-           alt="QRIS" class="qris-img">
-      <p>Total bayar: <span id="qris-total">Rp 0</span></p>
-    </div>
-
-    <!-- Tab BCA -->
-    <div class="tab-panel hidden" id="tab-bca">
-      <p>Transfer ke rekening berikut:</p>
-      <p><strong>BCA 8025147932</strong><br>a.n <strong>Nandang Tri Prasojo</strong></p>
-      <p>Total bayar: <span id="bca-total">Rp 0</span></p>
-    </div>
-
-    <button id="confirm-wa">Konfirmasi WA</button>
-    <button id="close-payment">Tutup</button>
   </div>
-</div>
-  
+
   <main class="max-w-5xl mx-auto p-4">
     <div id="lastUpdated" class="text-xs text-gray-500 mb-2"></div>
     <div id="productGrid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4"></div>
@@ -88,152 +82,5 @@
   <footer class="mt-10 py-6 text-center text-xs text-gray-400">
     Dibuat dengan ❤ | <button id="shareBtn" class="underline hover:text-indigo-600">Bagikan Link</button>
   </footer>
-
-<script>
-const SHEET_ID = "15g0UFq0fLNbyORzKiITkLzlRduUSvi6TEFhVqoQOedM";
-const SHEET_NAME = "Sheet1";
-const WA_PHONE = "6289697736784";
-const CURRENCY_PREFIX = "Rp";
-const THOUSANDS = ".";
-
-function formatRupiah(num) {
-  const intVal = parseInt(num, 10);
-  if (isNaN(intVal)) return num;
-  return CURRENCY_PREFIX + " " + intVal.toString().replace(/\B(?=(\d{3})+(?!\d))/g, THOUSANDS);
-}
-
-function buildWaLink(product) {
-  const text = `Halo, saya ingin pesan: ${product.Nama} (SKU: ${product.SKU}).`;
-  return `https://wa.me/${WA_PHONE}?text=${encodeURIComponent(text)}`;
-}
-
-async function fetchSheetData() {
-  const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(SHEET_NAME)}`;
-  const res = await fetch(url);
-  const text = await res.text();
-  const jsonStr = text.substring(text.indexOf("(") + 1, text.lastIndexOf(")"));
-  const dataObj = JSON.parse(jsonStr);
-  return gvizToObjects(dataObj.table).map(normalizeRow);
-}
-
-function gvizToObjects(table) {
-  const cols = table.cols.map(c => c.label || c.id);
-  return table.rows.map(r => {
-    const obj = {};
-    cols.forEach((col, i) => obj[col] = r.c[i] ? r.c[i].v : "");
-    return obj;
-  });
-}
-
-function normalizeRow(p){
-  return {
-    SKU: p["SKU"],
-    Nama: p["Nama"],
-    Harga: p["Harga"],
-    Deskripsi: p["Diskripsi"] || p["Deskripsi"],
-    FotoURL: p["FotoURL"],
-    Kategori: p["Kategori"],
-    Stok: p["Stok"],
-    Aktif: p["Aktif"],
-  };
-}
-
-let rawProducts = [];
-let filteredProducts = [];
-
-function applyFilters() {
-  const q = document.getElementById('searchInput').value.trim().toLowerCase();
-  const cat = document.getElementById('categoryFilter').value;
-  const sort = document.getElementById('sortSelect').value;
-
-  filteredProducts = rawProducts.filter(p => {
-    if (String(p.Aktif).toLowerCase() === 'false') return false;
-    const hay = `${p.SKU} ${p.Nama} ${p.Deskripsi} ${p.Kategori}`.toLowerCase();
-    if (q && !hay.includes(q)) return false;
-    if (cat && p.Kategori !== cat) return false;
-    return true;
-  });
-
-  switch (sort) {
-    case 'harga-asc':
-      filteredProducts.sort((a,b)=>parseInt(a.Harga||0)-parseInt(b.Harga||0));
-      break;
-    case 'harga-desc':
-      filteredProducts.sort((a,b)=>parseInt(b.Harga||0)-parseInt(a.Harga||0));
-      break;
-    case 'nama-asc':
-      filteredProducts.sort((a,b)=>String(a.Nama).localeCompare(String(b.Nama)));
-      break;
-    case 'nama-desc':
-      filteredProducts.sort((a,b)=>String(b.Nama).localeCompare(String(a.Nama)));
-      break;
-  }
-  renderProducts();
-}
-
-function renderProducts() {
-  const grid = document.getElementById('productGrid');
-  grid.innerHTML = '';
-  if (!filteredProducts.length) {
-    grid.innerHTML = '<div class="col-span-full text-center text-gray-500">Tidak ada produk.</div>';
-    return;
-  }
-
-  filteredProducts.forEach(p => {
-    const card = document.createElement('div');
-    card.className = 'product-card p-2 flex flex-col';
-    const imgSrc = p.FotoURL || 'https://via.placeholder.com/300x200?text=No+Image';
-    const desc = p.Deskripsi || '';
-    card.innerHTML = `
-      <img src="${imgSrc}" alt="${p.Nama}" loading="lazy"/>
-      <div class="flex-1 flex flex-col mt-2">
-        <h3 class="product-name mb-1">${p.Nama}</h3>
-        <p class="product-price mb-1">${formatRupiah(p.Harga)}</p>
-        <p class="product-desc mb-2">${desc}</p>
-        <a href="${buildWaLink(p)}" target="_blank" rel="noopener" class="wa-btn mt-auto">Pesan via WhatsApp</a>
-      </div>`;
-    grid.appendChild(card);
-  });
-}
-
-function populateCategoryFilter() {
-  const sel = document.getElementById('categoryFilter');
-  sel.innerHTML = '<option value="">Semua Kategori</option>';
-  const cats = Array.from(new Set(rawProducts.map(p=>p.Kategori).filter(Boolean)));
-  cats.sort();
-  cats.forEach(c => {
-    const opt = document.createElement('option');
-    opt.value = c;
-    opt.textContent = c;
-    sel.appendChild(opt);
-  });
-}
-
-async function init() {
-  try {
-    const data = await fetchSheetData();
-    rawProducts = data;
-    populateCategoryFilter();
-    applyFilters();
-    document.getElementById('lastUpdated').textContent = `Data dimuat: ${new Date().toLocaleString('id-ID')}`;
-  } catch (err) {
-    console.error(err);
-    document.getElementById('productGrid').innerHTML = '<div class="col-span-full text-center text-red-500">Gagal memuat data. Cek Sheet ID & izin akses.</div>';
-  }
-}
-
-function copyCurrentUrl() {
-  navigator.clipboard.writeText(window.location.href)
-    .then(()=>alert('Link katalog disalin!'))
-    .catch(()=>prompt('Salin manual link katalog:', window.location.href));
-}
-
-document.getElementById('searchInput').addEventListener('input', applyFilters);
-document.getElementById('categoryFilter').addEventListener('change', applyFilters);
-document.getElementById('sortSelect').addEventListener('change', applyFilters);
-document.getElementById('shareBtn').addEventListener('click', copyCurrentUrl);
-
-init();
-</script>
 </body>
 </html>
