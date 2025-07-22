@@ -1,168 +1,124 @@
-/* =====================================================
-   London Poster / Terrace Zine Theme
-   Dibuat untuk NandangGaming – memastikan UI terbaca.
-   ===================================================== */
+/* ==============================
+   Style.css Final – Katalog Jualan
+   Tema: Glassmorphism + Background Image
+   ============================== */
 
-/* ---------- Variabel Warna ---------- */
-:root {
-  --bg-overlay: rgba(0,0,0,.55);         /* gelapkan foto background */
-  --ui-parchment: rgba(248,240,223,.92); /* panel & kartu terang */
-  --ui-parchment-hover: rgba(248,240,223,1);
-  --ui-parchment-border: rgba(0,0,0,.18);
-  --ui-text-main: #1b130a;               /* teks utama gelap */
-  --ui-text-muted: #5b4836;              /* teks muted */
-  --ui-accent-red: #c85030;              /* tombol aksi */
-  --ui-accent-red-hover: #b54126;
-  --ui-accent-gold: #d8b671;             /* judul/aksen */
-}
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
 
-/* ---------- Background Halaman ---------- */
 body {
   margin: 0;
-  /* Lapisan 1: overlay gelap; Lapisan 2: foto background */
-  background: 
-    var(--bg-overlay),
-    url('https://pbs.twimg.com/media/GSWhaIHXMAA0w1T?format=jpg&name=large') center/cover fixed no-repeat;
-  color: var(--ui-text-main);
-  font-family: 'Playfair Display', serif;
+  font-family: 'Poppins', sans-serif;
+  color: #fff;
+  background: url('https://pbs.twimg.com/media/GSWhaIHXMAA0w1T?format=jpg&name=large') center/cover fixed no-repeat;
   position: relative;
 }
 
-/* Opsional noise lembut supaya terasa kertas */
-body::after {
+/* Overlay gelap agar teks terbaca */
+body::before {
   content: "";
-  pointer-events: none;
   position: fixed;
   inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160' viewBox='0 0 160 160'%3E%3Crect width='1' height='1' fill='rgba(0,0,0,0.06)'/%3E%3C/svg%3E");
-  background-repeat: repeat;
-  mix-blend-mode: multiply;
-  opacity: .35;
+  background: rgba(0,0,0,0.45);
   z-index: -1;
 }
 
-/* ---------- Header & Footer Override (tailwind bg-* ditimpa) ---------- */
-header {
-  background: var(--ui-parchment) !important;
-  color: var(--ui-text-main) !important;
-  border-bottom: 1px solid var(--ui-parchment-border);
-  backdrop-filter: blur(2px);
-}
-footer {
-  background: var(--ui-parchment) !important;
-  color: var(--ui-text-muted) !important;
-  border-top: 1px solid var(--ui-parchment-border);
-  backdrop-filter: blur(2px);
-}
-footer button {
-  color: var(--ui-accent-red);
-}
-footer button:hover {
-  color: var(--ui-accent-red-hover);
+/* Header & Footer */
+header, footer {
+  background: rgba(255,255,255,0.12);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: #fff;
+  border-bottom: 1px solid rgba(255,255,255,0.2);
 }
 
-/* ---------- Judul Katalog ---------- */
 header h1 {
-  font-family: 'Cinzel', 'Playfair Display', serif;
   font-weight: 700;
-  letter-spacing: .5px;
-  color: var(--ui-accent-gold) !important;
-  text-shadow: 0 1px 0 #fff8, 0 0 8px rgba(0,0,0,.25);
+  color: #ffcc70;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.4);
 }
 
-/* ---------- Kontrol UI (search, kategori, sort) ---------- */
-header input,
-header select {
-  background: var(--ui-parchment) !important;
-  color: var(--ui-text-main) !important;
-  border: 1px solid var(--ui-parchment-border) !important;
-  box-shadow: 0 1px 2px rgba(0,0,0,.15) inset;
+/* Kontrol UI */
+header input, header select {
+  background: rgba(0,0,0,0.5);
+  color: #fff;
+  border: 1px solid rgba(255,255,255,0.3);
+  padding: 0.4rem 0.5rem;
+  border-radius: 0.3rem;
+  outline: none;
 }
 header input::placeholder {
-  color: var(--ui-text-muted);
-}
-header select option {
-  color: var(--ui-text-main);
+  color: rgba(255,255,255,0.7);
 }
 
-/* ---------- Timestamp ---------- */
-#lastUpdated {
-  color: var(--ui-text-muted) !important;
-}
-
-/* ---------- Kartu Produk ---------- */
+/* Kartu Produk */
 .product-card {
-  background: var(--ui-parchment);
-  border: 1px solid var(--ui-parchment-border);
-  border-radius: .75rem;
-  padding: .75rem;
-  box-shadow: 0 2px 4px rgba(0,0,0,.18),0 0 0 1px rgba(255,255,255,.25) inset;
-  transition: transform .12s ease, box-shadow .12s ease, background .12s ease;
+  background: rgba(0,0,0,0.5);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 0.75rem;
+  padding: 0.75rem;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  color: #fff;
+  transition: transform 0.2s ease, background 0.2s ease;
 }
 .product-card:hover {
-  background: var(--ui-parchment-hover);
-  transform: translateY(-2px) scale(1.01);
-  box-shadow: 0 4px 10px rgba(0,0,0,.25);
+  background: rgba(0,0,0,0.7);
+  transform: translateY(-3px);
 }
+
 .product-card img {
   width: 100%;
-  aspect-ratio: 1/1;
-  object-fit: contain;
-  background:#fff;
-  border-radius:.5rem;
-  border:1px solid rgba(0,0,0,.08);
-  padding:.25rem;
+  border-radius: 0.5rem;
+  border: 1px solid rgba(255,255,255,0.2);
 }
+
 .product-name {
-  font-family: 'Cinzel','Playfair Display',serif;
-  font-weight:700;
-  font-size:1rem;
-  margin-top:.5rem;
-  color:var(--ui-text-main);
+  font-weight: 700;
+  font-size: 1rem;
+  margin-top: 0.5rem;
+  color: #ffcc70;
 }
+
 .product-price {
-  font-weight:700;
-  font-size:.95rem;
-  margin:.25rem 0;
-  color:var(--ui-accent-red);
+  font-weight: 600;
+  color: #76ff03;
+  margin: 0.3rem 0;
 }
+
 .product-desc {
-  font-size:.85rem;
-  line-height:1.25;
-  color:var(--ui-text-muted);
-  margin-bottom:.75rem;
+  font-size: 0.85rem;
+  color: rgba(255,255,255,0.85);
+  margin-bottom: 0.7rem;
 }
 
-/* stok kecil opsional (kalau kamu tambahkan sendiri) */
-.product-stock {
-  font-size:.75rem;
-  color:var(--ui-text-muted);
-  margin-bottom:.5rem;
-}
-
-/* ---------- Tombol WhatsApp ---------- */
+/* Tombol WhatsApp */
 .wa-btn {
-  display:inline-block;
-  width:100%;
-  text-align:center;
-  background:var(--ui-accent-red);
-  color:#fff !important;
-  padding:.5rem .75rem;
-  border-radius:.5rem;
-  font-weight:700;
-  font-size:.95rem;
-  text-decoration:none;
-  transition:background .12s ease, transform .12s ease;
+  display: inline-block;
+  width: 100%;
+  text-align: center;
+  background: linear-gradient(45deg, #ff5722, #e64a19);
+  color: #fff;
+  padding: 0.5rem;
+  border-radius: 0.4rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 .wa-btn:hover {
-  background:var(--ui-accent-red-hover);
-  transform:scale(1.01);
+  transform: scale(1.05);
+  box-shadow: 0 0 10px rgba(255,87,34,0.8);
 }
 
-/* ---------- Responsive Minor Tweaks ---------- */
-@media (max-width:640px){
-  header h1{font-size:1.25rem;}
-  .wa-btn{font-size:.875rem;}
-  .product-name{font-size:.95rem;}
-  .product-price{font-size:.9rem;}
+/* Footer */
+footer {
+  border-top: 1px solid rgba(255,255,255,0.2);
+  padding: 0.5rem;
+  text-align: center;
+}
+
+/* Responsif */
+@media (max-width:640px) {
+  header h1 { font-size: 1.3rem; }
+  .product-name { font-size: 0.95rem; }
+  .wa-btn { font-size: 0.9rem; }
 }
