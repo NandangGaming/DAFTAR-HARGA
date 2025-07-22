@@ -1,4 +1,3 @@
-/* Keranjang Floating */
 #cart-icon {
   position: fixed;
   bottom: 20px;
@@ -8,97 +7,78 @@
   padding: 10px 15px;
   border-radius: 50px;
   cursor: pointer;
-  font-size: 18px;
-  box-shadow: 0 3px 6px rgba(0,0,0,0.3);
-  z-index: 999;
-}
-#cart-icon span {
-  background: #fff;
-  color: #ff5722;
-  padding: 2px 6px;
-  border-radius: 12px;
-  margin-left: 5px;
-  font-weight: bold;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+  z-index: 1000;
 }
 
-/* Modal umum */
 #cart-modal, #payment-modal {
   position: fixed;
   top: 0; left: 0;
   width: 100%; height: 100%;
-  background: rgba(0,0,0,0.6);
+  background: rgba(0,0,0,0.5);
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 1000;
+  z-index: 999;
 }
-.hidden { display: none; }
 
 .cart-content, .payment-content {
-  background: rgba(255,255,255,0.9);
+  background: #fff;
   padding: 20px;
   border-radius: 8px;
   width: 90%;
   max-width: 400px;
-  color: #000;
 }
 
-.cart-content h2, .payment-content h2 {
-  margin-top: 0;
-  text-align: center;
-}
-
-.cart-total {
-  font-weight: bold;
-  margin: 10px 0;
-  text-align: right;
-}
-
-/* Tombol umum */
-button {
-  padding: 10px;
-  border: none;
-  border-radius: 5px;
-  background: #ff5722;
-  color: #fff;
-  cursor: pointer;
-}
-button:hover { background: #e64a19; }
-
-/* Tab Pembayaran */
-.payment-tabs {
+.cart-item {
   display: flex;
-  gap: 10px;
-  margin-bottom: 10px;
+  justify-content: space-between;
+  padding: 5px 0;
+  border-bottom: 1px solid #eee;
 }
-.tab-btn {
-  flex: 1;
-  padding: 10px;
-  background: #ccc;
-  color: #000;
-}
-.tab-btn.active {
-  background: #ff5722;
-  color: #fff;
-}
-.tab-panel { text-align: center; }
-.tab-panel.hidden { display: none; }
 
-.qris-img {
-  max-width: 200px;
-  margin: 10px auto;
-}
-.add-cart-btn {
-  width: 100%;
-  background: #28a745;
-  color: #fff;
+button {
+  background: #ff5722;
+  color: white;
   border: none;
   padding: 8px 12px;
-  margin-top: 8px;
   border-radius: 4px;
   cursor: pointer;
-  font-weight: bold;
+  margin-top: 10px;
 }
-.add-cart-btn:hover {
-  background: #218838;
+
+button:hover {
+  background: #e64a19;
+}
+
+.payment-tabs {
+  display: flex;
+  margin-bottom: 10px;
+}
+
+.payment-tabs .tab-btn {
+  flex: 1;
+  padding: 8px;
+  cursor: pointer;
+  background: #ddd;
+  border: none;
+}
+
+.payment-tabs .tab-btn.active {
+  background: #ff5722;
+  color: #fff;
+}
+
+.tab-panel {
+  margin-top: 10px;
+}
+
+.hidden {
+  display: none;
+}
+
+.qris-img {
+  width: 100%;
+  max-width: 300px;
+  margin: 10px 0;
 }
