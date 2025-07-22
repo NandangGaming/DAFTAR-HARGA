@@ -1,90 +1,168 @@
+/* =====================================================
+   London Poster / Terrace Zine Theme
+   Dibuat untuk NandangGaming – memastikan UI terbaca.
+   ===================================================== */
+
+/* ---------- Variabel Warna ---------- */
 :root {
-  --text-main: #ffffff;
-  --text-muted: #e0e0e0;
-  --accent: #ff4081;
-  --card-bg: rgba(0, 0, 0, 0.6);
-  --card-hover: rgba(0, 0, 0, 0.75);
-  --border: rgba(255, 255, 255, 0.2);
+  --bg-overlay: rgba(0,0,0,.55);         /* gelapkan foto background */
+  --ui-parchment: rgba(248,240,223,.92); /* panel & kartu terang */
+  --ui-parchment-hover: rgba(248,240,223,1);
+  --ui-parchment-border: rgba(0,0,0,.18);
+  --ui-text-main: #1b130a;               /* teks utama gelap */
+  --ui-text-muted: #5b4836;              /* teks muted */
+  --ui-accent-red: #c85030;              /* tombol aksi */
+  --ui-accent-red-hover: #b54126;
+  --ui-accent-gold: #d8b671;             /* judul/aksen */
 }
 
+/* ---------- Background Halaman ---------- */
 body {
   margin: 0;
-  background: url('https://pbs.twimg.com/media/GSWhaIHXMAA0w1T?format=jpg&name=large') center/cover fixed no-repeat;
+  /* Lapisan 1: overlay gelap; Lapisan 2: foto background */
+  background: 
+    var(--bg-overlay),
+    url('https://pbs.twimg.com/media/GSWhaIHXMAA0w1T?format=jpg&name=large') center/cover fixed no-repeat;
+  color: var(--ui-text-main);
   font-family: 'Playfair Display', serif;
-  color: var(--text-main);
   position: relative;
 }
 
-/* Overlay untuk efek gelap agar teks jelas */
-body::before {
+/* Opsional noise lembut supaya terasa kertas */
+body::after {
   content: "";
+  pointer-events: none;
   position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background: rgba(0,0,0,0.5);
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160' viewBox='0 0 160 160'%3E%3Crect width='1' height='1' fill='rgba(0,0,0,0.06)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  mix-blend-mode: multiply;
+  opacity: .35;
   z-index: -1;
 }
 
-header, footer {
-  background: rgba(0,0,0,0.8);
-  color: var(--text-main);
-  padding: 10px;
-  text-align: center;
+/* ---------- Header & Footer Override (tailwind bg-* ditimpa) ---------- */
+header {
+  background: var(--ui-parchment) !important;
+  color: var(--ui-text-main) !important;
+  border-bottom: 1px solid var(--ui-parchment-border);
+  backdrop-filter: blur(2px);
+}
+footer {
+  background: var(--ui-parchment) !important;
+  color: var(--ui-text-muted) !important;
+  border-top: 1px solid var(--ui-parchment-border);
+  backdrop-filter: blur(2px);
+}
+footer button {
+  color: var(--ui-accent-red);
+}
+footer button:hover {
+  color: var(--ui-accent-red-hover);
 }
 
-header input, header select {
-  background: rgba(255,255,255,0.1);
-  color: var(--text-main);
-  border: 1px solid var(--border);
-  padding: 6px 8px;
-  border-radius: 4px;
+/* ---------- Judul Katalog ---------- */
+header h1 {
+  font-family: 'Cinzel', 'Playfair Display', serif;
+  font-weight: 700;
+  letter-spacing: .5px;
+  color: var(--ui-accent-gold) !important;
+  text-shadow: 0 1px 0 #fff8, 0 0 8px rgba(0,0,0,.25);
 }
 
+/* ---------- Kontrol UI (search, kategori, sort) ---------- */
+header input,
+header select {
+  background: var(--ui-parchment) !important;
+  color: var(--ui-text-main) !important;
+  border: 1px solid var(--ui-parchment-border) !important;
+  box-shadow: 0 1px 2px rgba(0,0,0,.15) inset;
+}
+header input::placeholder {
+  color: var(--ui-text-muted);
+}
+header select option {
+  color: var(--ui-text-main);
+}
+
+/* ---------- Timestamp ---------- */
+#lastUpdated {
+  color: var(--ui-text-muted) !important;
+}
+
+/* ---------- Kartu Produk ---------- */
 .product-card {
-  background: var(--card-bg);
-  border: 1px solid var(--border);
-  border-radius: 0.5rem;
-  padding: 0.5rem;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-  backdrop-filter: blur(3px);
+  background: var(--ui-parchment);
+  border: 1px solid var(--ui-parchment-border);
+  border-radius: .75rem;
+  padding: .75rem;
+  box-shadow: 0 2px 4px rgba(0,0,0,.18),0 0 0 1px rgba(255,255,255,.25) inset;
+  transition: transform .12s ease, box-shadow .12s ease, background .12s ease;
 }
-
 .product-card:hover {
-  transform: scale(1.02);
-  background: var(--card-hover);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.7);
+  background: var(--ui-parchment-hover);
+  transform: translateY(-2px) scale(1.01);
+  box-shadow: 0 4px 10px rgba(0,0,0,.25);
 }
-
 .product-card img {
   width: 100%;
-  border-radius: 0.5rem;
-  border: 1px solid var(--border);
+  aspect-ratio: 1/1;
+  object-fit: contain;
+  background:#fff;
+  border-radius:.5rem;
+  border:1px solid rgba(0,0,0,.08);
+  padding:.25rem;
 }
-
 .product-name {
-  font-weight: 700;
-  color: #ffe97f;
+  font-family: 'Cinzel','Playfair Display',serif;
+  font-weight:700;
+  font-size:1rem;
+  margin-top:.5rem;
+  color:var(--ui-text-main);
 }
-
 .product-price {
-  font-weight: 700;
-  color: #76ff03;
+  font-weight:700;
+  font-size:.95rem;
+  margin:.25rem 0;
+  color:var(--ui-accent-red);
 }
-
 .product-desc {
-  font-size: 0.9rem;
-  color: var(--text-muted);
+  font-size:.85rem;
+  line-height:1.25;
+  color:var(--ui-text-muted);
+  margin-bottom:.75rem;
 }
 
+/* stok kecil opsional (kalau kamu tambahkan sendiri) */
+.product-stock {
+  font-size:.75rem;
+  color:var(--ui-text-muted);
+  margin-bottom:.5rem;
+}
+
+/* ---------- Tombol WhatsApp ---------- */
 .wa-btn {
-  display: inline-block;
-  background: var(--accent);
-  color: white;
-  padding: 0.5rem;
-  border-radius: 0.375rem;
-  text-decoration: none;
-  font-weight: 600;
-  transition: background 0.2s ease;
+  display:inline-block;
+  width:100%;
+  text-align:center;
+  background:var(--ui-accent-red);
+  color:#fff !important;
+  padding:.5rem .75rem;
+  border-radius:.5rem;
+  font-weight:700;
+  font-size:.95rem;
+  text-decoration:none;
+  transition:background .12s ease, transform .12s ease;
 }
 .wa-btn:hover {
-  background: #ff0055;
+  background:var(--ui-accent-red-hover);
+  transform:scale(1.01);
+}
+
+/* ---------- Responsive Minor Tweaks ---------- */
+@media (max-width:640px){
+  header h1{font-size:1.25rem;}
+  .wa-btn{font-size:.875rem;}
+  .product-name{font-size:.95rem;}
+  .product-price{font-size:.9rem;}
 }
