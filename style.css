@@ -1,0 +1,36 @@
+.product-card {
+  background: #fff;
+  border-radius: 0.5rem;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.product-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+.product-name {
+  font-weight: 600;
+  font-size: 1rem;
+  color: #1f2937;
+}
+.product-price {
+  font-weight: 700;
+  color: #16a34a;
+}
+.product-desc {
+  font-size: 0.85rem;
+  color: #4b5563;
+}
+.wa-btn {
+  background: #25D366;
+  color: white;
+  text-align: center;
+  padding: 0.5rem;
+  border-radius: 0.375rem;
+  text-decoration: none;
+  font-weight: 600;
+  transition: background 0.2s ease;
+}
+.wa-btn:hover {
+  background: #22c55e;
+}
