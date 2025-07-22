@@ -1,30 +1,84 @@
+:root {
+  --text-main: #ffffff;
+  --text-muted: #e0e0e0;
+  --accent: #ff4081;
+  --card-bg: rgba(0, 0, 0, 0.6);
+  --card-hover: rgba(0, 0, 0, 0.75);
+  --border: rgba(255, 255, 255, 0.2);
+}
+
+body {
+  margin: 0;
+  background: url('https://pbs.twimg.com/media/GSWhaIHXMAA0w1T?format=jpg&name=large') center/cover fixed no-repeat;
+  font-family: 'Playfair Display', serif;
+  color: var(--text-main);
+  position: relative;
+}
+
+/* Overlay untuk efek gelap agar teks jelas */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.5);
+  z-index: -1;
+}
+
+header, footer {
+  background: rgba(0,0,0,0.8);
+  color: var(--text-main);
+  padding: 10px;
+  text-align: center;
+}
+
+header input, header select {
+  background: rgba(255,255,255,0.1);
+  color: var(--text-main);
+  border: 1px solid var(--border);
+  padding: 6px 8px;
+  border-radius: 4px;
+}
+
 .product-card {
-  background: #fff;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
   border-radius: 0.5rem;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  padding: 0.5rem;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
+  backdrop-filter: blur(3px);
 }
+
 .product-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+  transform: scale(1.02);
+  background: var(--card-hover);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.7);
 }
+
+.product-card img {
+  width: 100%;
+  border-radius: 0.5rem;
+  border: 1px solid var(--border);
+}
+
 .product-name {
-  font-weight: 600;
-  font-size: 1rem;
-  color: #1f2937;
+  font-weight: 700;
+  color: #ffe97f;
 }
+
 .product-price {
   font-weight: 700;
-  color: #16a34a;
+  color: #76ff03;
 }
+
 .product-desc {
-  font-size: 0.85rem;
-  color: #4b5563;
+  font-size: 0.9rem;
+  color: var(--text-muted);
 }
+
 .wa-btn {
-  background: #25D366;
+  display: inline-block;
+  background: var(--accent);
   color: white;
-  text-align: center;
   padding: 0.5rem;
   border-radius: 0.375rem;
   text-decoration: none;
@@ -32,5 +86,5 @@
   transition: background 0.2s ease;
 }
 .wa-btn:hover {
-  background: #22c55e;
+  background: #ff0055;
 }
